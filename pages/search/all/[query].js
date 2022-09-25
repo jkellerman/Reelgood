@@ -9,11 +9,8 @@ const Search = () => {
   return (
     <>
       <Head>
-        <title>{`${query.replaceAll("-", " ")} | Entertainment`}</title>
-        <meta
-          name="description"
-          content={`Where to watch ${query.replaceAll("-", " ")}`}
-        />
+        <title>{`${query} | Entertainment`}</title>
+        <meta name="description" content={`Where to watch ${query}`} />
       </Head>
       <main>
         <SearchBar all />

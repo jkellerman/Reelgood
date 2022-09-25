@@ -1,6 +1,5 @@
 .container {
   margin: 0 auto 2rem;
-  /* padding-bottom: 2rem; */
   width: 90%;
 }
 
@@ -30,6 +29,7 @@
   text-transform: capitalize;
   font-size: inherit;
   padding: 0;
+  cursor: pointer;
 }
 
 @media (max-width: 23em) {

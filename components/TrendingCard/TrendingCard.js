@@ -21,7 +21,7 @@ const TrendingCard = ({
           : `/series/${id}/${seriesName.replaceAll(" ", "-")}`
       }
     >
-      <a className={styles.link}>
+      <a>
         <article className={styles.container}>
           <Image
             src={`${BASE_URL_IMAGE}${image}`}

@@ -19,7 +19,6 @@ const Nav = () => {
               layout="fill"
               objectFit="contain"
               unoptimized={true}
-              priority={true}
             />
           </a>
         </Link>
@@ -35,7 +34,6 @@ const Nav = () => {
             layout="fill"
             objectFit="contain"
             unoptimized={true}
-            priority={true}
           />
         </div>
       </nav>

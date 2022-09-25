@@ -9,8 +9,11 @@ const MoviesSearch = () => {
   return (
     <>
       <Head>
-        <title>{`${query} | Entertainment`}</title>
-        <meta name="description" content={`Where to watch ${query}`} />
+        <title>{`${query.replaceAll("-", " ")} | Entertainment`}</title>
+        <meta
+          name="description"
+          content={`Where to watch ${query.replaceAll("-", " ")}`}
+        />
       </Head>
       <main>
         <SearchBar movies />

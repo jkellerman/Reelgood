@@ -1,30 +1,82 @@
-.banner {
-  display: flex;
-  overflow-x: scroll;
-  overscroll-behavior-inline: contain;
-  margin-bottom: 1.5rem;
+.swiperSlide {
+  height: 140px !important;
+  width: 71.112% !important;
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
 }
 
-.banner::-webkit-scrollbar {
-  height: 5px;
+.swiperNav {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 35px;
+  height: 35px;
+  z-index: 1;
+  cursor: pointer;
   background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  display: none;
+  animation: fade 200ms ease-in;
+  border: none;
 }
 
-.banner::-webkit-scrollbar-thumb {
-  border-radius: 5px;
-  background-color: var(--Greyish-blue);
+.swiperNavPrev {
+  left: 0;
+  background-image: url("../../public/assets/chevron-left-solid.svg");
+}
+.swiperNavNext {
+  right: 0;
+  background-image: url("../../public/assets/chevron-right-solid.svg");
+}
+
+@media (hover: hover) {
+  .container:hover .swiperNav {
+    display: block;
+  }
+}
+
+@media (max-width: 21.625em) {
+  .swiperSlide {
+    height: 120px !important;
+    width: 85% !important;
+  }
+}
+
+@media (min-width: 30em) {
+  .swiperSlide {
+    height: 150px !important;
+    width: 65.25% !important;
+  }
 }
 
 @media (min-width: 48em) {
-  .banner {
-    margin-bottom: 1rem;
+  .swiperSlide {
+    height: 230px !important;
+    max-width: 470px !important;
   }
+}
 
-  .banner::-webkit-scrollbar {
-    height: 8px;
+@media (min-width: 64em) {
+  .swiperSlide {
+    height: 230px !important;
+    width: 60% !important;
   }
+}
 
-  .banner::-webkit-scrollbar-thumb {
-    border-radius: 8px;
+@media (min-width: 75em) {
+  .swiperSlide {
+    width: 57% !important;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

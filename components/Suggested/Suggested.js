@@ -1,9 +1,15 @@
 import styles from "@/components/Suggested/Suggested.module.css";
-import Link from "next/link";
-import Image from "next/image";
-import { BASE_URL_IMAGE, shimmer, toBase64 } from "@/utils/utils";
+import SuggestedCard from "../SuggestedCard/SuggestedCard";
+import { useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
 
-const Suggested = ({ suggested, movies, closeReadMore }) => {
+import { Navigation } from "swiper";
+
+const Suggested = ({ suggested, closeReadMore }) => {
+  const swiperNavPrevRef = useRef(null);
+  const swiperNavNextRef = useRef(null);
   const suggestedArr = suggested.results.filter(
     (suggested) => suggested.backdrop_path !== null
   );
@@ -11,58 +17,46 @@ const Suggested = ({ suggested, movies, closeReadMore }) => {
   return (
     <section className={styles.container}>
       <div className={styles.heading}>suggested</div>
-
       {suggested.results.length > 0 ? (
         <div className={styles.suggestions}>
-          {suggestedArr.map((suggestion) => {
-            return (
-              <article key={suggestion.id} className={styles.linkContainer}>
-                <Link
-                  href={
-                    movies
-                      ? `/movies/${suggestion.id}/${suggestion.title.replace(
-                          /\s+/g,
-                          "-"
-                        )}`
-                      : `/series/${suggestion.id}/${suggestion.name.replace(
-                          /\s+/g,
-                          "-"
-                        )}`
-                  }
-                >
-                  <a
-                    className={styles.suggestionContainer}
-                    onClick={() => closeReadMore()}
-                  >
-                    <Image
-                      src={`${BASE_URL_IMAGE}${suggestion.backdrop_path}`}
-                      alt={`${suggestion.title} backdrop`}
-                      layout="fill"
-                      unoptimized={true}
-                      objectFit="cover"
-                      placeholder="blur"
-                      blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                        shimmer(240, 140)
-                      )}`}
-                    />
-                  </a>
-                </Link>
-                {movies ? (
-                  <div className={styles.name}>
-                    {suggestion.title.length > 40
-                      ? `${suggestion.title.slice(0, 40)}...`
-                      : suggestion.title}
-                  </div>
-                ) : (
-                  <div className={styles.name}>
-                    {suggestion.name.length > 40
-                      ? `${suggestion.name.slice(0, 40)}...`
-                      : suggestion.name}
-                  </div>
-                )}
-              </article>
-            );
-          })}
+          <Swiper
+            spaceBetween={16}
+            slidesPerView={"auto"}
+            modules={[Navigation]}
+            navigation={{
+              prevEl: swiperNavPrevRef.current,
+              NextEl: swiperNavNextRef.current,
+            }}
+            grabCursor={true}
+            onInit={(swiper) => {
+              swiper.params.navigation.prevEl = swiperNavPrevRef.current;
+              swiper.params.navigation.nextEl = swiperNavNextRef.current;
+              swiper.navigation.init();
+              swiper.navigation.update();
+            }}
+          >
+            {suggestedArr.map((suggestion) => {
+              return (
+                <SwiperSlide className={styles.swiperSlide} key={suggestion.id}>
+                  <SuggestedCard
+                    closeReadMore={closeReadMore}
+                    id={suggestion.id}
+                    title={suggestion.title}
+                    name={suggestion.name}
+                    backdrop={suggestion.backdrop_path}
+                  />
+                </SwiperSlide>
+              );
+            })}
+            <button
+              className={`${styles.swiperNav} ${styles.swiperNavPrev}`}
+              ref={swiperNavPrevRef}
+            ></button>
+            <button
+              className={`${styles.swiperNav} ${styles.swiperNavNext}`}
+              ref={swiperNavNextRef}
+            ></button>
+          </Swiper>
         </div>
       ) : (
         <div className={styles.message}>No suggestions yet</div>

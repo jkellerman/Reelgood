@@ -12,7 +12,7 @@ const MovieGenre = ({ genreList }) => {
   return (
     <>
       <Head>
-        <title>{`Watch ${name} online | Entertainment`}</title>
+        <title>{`Watch ${name} Movies Online | Entertainment`}</title>
         <meta
           name="description"
           content={`Search and discover the best ${name} movies from Netflix, Amazon Prime, Disney+ and many more services.`}

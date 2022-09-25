@@ -32,7 +32,6 @@ const Search = ({ all, movies, series, hero }) => {
           layout="fill"
           objectFit="contain"
           unoptimized={true}
-          priority={true}
         />
       </div>
       {all && (

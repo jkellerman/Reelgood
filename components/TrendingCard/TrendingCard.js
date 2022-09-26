@@ -21,8 +21,8 @@ const TrendingCard = ({
           : `/series/${id}/${seriesName.replaceAll(" ", "-")}`
       }
     >
-      <a className={styles.link}>
-        <article className={styles.container}>
+      <a className="keen-slider__slide">
+        <div className="keen-slider__img">
           <Image
             src={`${BASE_URL_IMAGE}${image}`}
             alt={`${movieTitle || seriesName}`}
@@ -34,7 +34,7 @@ const TrendingCard = ({
               shimmer(240, 140)
             )}`}
           />
-        </article>
+        </div>
         <TrendingCardDetails
           image={image}
           movieTitle={movieTitle}

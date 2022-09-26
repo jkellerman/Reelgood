@@ -1,4 +1,4 @@
-.banner {
+/* .banner {
   display: flex;
   overflow-x: scroll;
   overscroll-behavior-inline: contain;
@@ -27,4 +27,4 @@
   .banner::-webkit-scrollbar-thumb {
     border-radius: 8px;
   }
-}
+} */

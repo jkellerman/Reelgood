@@ -18,6 +18,7 @@ const Trending = ({ arr }) => {
         <Swiper
           slidesPerView={"auto"}
           spaceBetween={16}
+          speed={700}
           breakpoints={{
             768: {
               spaceBetween: 40,
@@ -29,7 +30,7 @@ const Trending = ({ arr }) => {
             NextEl: swiperNavNextRef.current,
           }}
           autoplay={{
-            delay: 2500,
+            delay: 4000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
           }}

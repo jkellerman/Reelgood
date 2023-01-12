@@ -1,28 +1,29 @@
-import { useState, useEffect } from "react";
+import QueryString from "qs";
+import { useState, useEffect, useRef } from "react";
 
 const useInfiniteScroll = (endpoint) => {
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [shouldFetch, setShouldFetch] = useState(false);
-  const url = `${endpoint}/${page}`;
-  // const mounted = useRef(false); // mounted useRef needed in react 18 strict mode when running locally to stop page 1 from endpoint rendering twice when component mounts
+  const [newImages, setNewImages] = useState(false);
 
   // fetch films/series everytime page in url changes
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await fetch(url);
+        const queryString = QueryString.stringify(
+          { page },
+          { addQueryPrefix: true }
+        );
+        const response = await fetch(`${endpoint}${queryString}`);
         const data = await response.json();
         const filteredArr = data.data.results.filter(
           (item) => item.backdrop_path !== null && !item.known_for_department
         );
-        setCards((prev) => {
-          if (page === 1)
-            return filteredArr; // function stops here when page is set back to one after genre page switches, otherwise new cards for new genre page won't render
-          else return [...prev, ...filteredArr];
-        });
-        setShouldFetch(false);
+        const arr = filteredArr;
+
+        setCards((prev) => [...prev, ...arr]);
+        setNewImages(false);
         setIsLoading(false);
       } catch (error) {
         setShouldFetch(false);
@@ -30,18 +31,14 @@ const useInfiniteScroll = (endpoint) => {
       }
     };
     fetchMovies();
-  }, [url]);
+  }, [endpoint, page]);
 
   useEffect(() => {
-    // if (!mounted.current) {
-    //   mounted.current = true;
-    //   return;
-    // } // Using mounted ref to stop double fetching when running locally in React 18 strict mode (see comment above)
-    if (!shouldFetch) return;
+    if (!newImages) return;
     setPage((OldPage) => {
       return OldPage + 1;
     });
-  }, [shouldFetch]);
+  }, [newImages]);
 
   // Event for when scrolled to the bottom of the page
   const event = () => {
@@ -58,9 +55,10 @@ const useInfiniteScroll = (endpoint) => {
     return () => window.removeEventListener("scroll", event);
   }, []);
 
-  // If navigated to new page, set page number to 1
+  // If navigated to new page, set page number from api to 1
   useEffect(() => {
     setPage(1);
+    setCards([]);
   }, [endpoint]);
 
   return { cards, isLoading };
